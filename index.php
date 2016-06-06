@@ -7,6 +7,6 @@
  * Free to use under the MIT license.
  */
 
-$context->assets->addDir('assets/');
+$context->assets->addDir('assets');
 
 $app->components->addAlias('navigation-menu', 'file:' . $context->dir . '/components/navigationMenu.php');

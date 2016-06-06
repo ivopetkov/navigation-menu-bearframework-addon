@@ -7,14 +7,16 @@
  */
 
 $type = 'horizontal-down';
-if (strlen($component->type) > 0) {
-    if (array_search($component->type, ['horizontal-down', 'vertical-left', 'vertical-right', 'list-vertical', 'list-horizontal']) !== false) {
-        $type = $component->type;
+$temp = (string) $component->type;
+if ($temp !== '') {
+    if (array_search($temp, ['horizontal-down', 'vertical-left', 'vertical-right', 'list-vertical', 'list-horizontal']) !== false) {
+        $type = $temp;
     }
 }
 $moreItemHtml = '<li><a>...</a><ul></ul></li>';
-if (strlen($component->moreItemHtml) > 0) {
-    $moreItemHtml = $component->moreItemHtml;
+$temp = (string) $component->moreItemHtml;
+if ($temp !== '') {
+    $moreItemHtml = $temp;
 }
 
 $innerHTML = trim($component->innerHTML);
@@ -33,10 +35,10 @@ if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'verti
     $rootElement->setAttribute('data-nm-type', $type);
     $rootElement->setAttribute('data-nm-more', $moreItemHtml);
 }
-if (strlen($component->class) > 0) {
+if ((string) $component->class !== '') {
     $rootElement->setAttribute('class', $component->class);
 }
-if (strlen($component->style) > 0) {
+if ((string) $component->style !== '') {
     $rootElement->setAttribute('style', $component->style);
 }
 $content = $rootElement->outerHTML;
@@ -55,7 +57,7 @@ $attributes = '';
 ?><html>
     <head><?php
         if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
-            echo '<script src="' . $context->assets->getUrl('assets/navigationMenu.js') . '" />';
+            echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/navigationMenu.js') . '" />';
         }
         ?><style><?= $style ?></style>
     </head>

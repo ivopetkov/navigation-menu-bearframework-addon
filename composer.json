@@ -1,7 +1,7 @@
 {
     "name": "ivopetkov/navigation-menu-bearframework-addon",
     "description": "Navigation menu addon for Bear Framework",
-    "keywords": ["navigation", "menu", "addon", "Bear Framework"],
+    "keywords": ["navigation menu", "Bear Framework addon"],
     "homepage": "https://github.com/ivopetkov/navigation-menu-bearframework-addon",
     "license": "MIT",
     "authors": [
