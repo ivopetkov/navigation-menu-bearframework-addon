@@ -57,7 +57,7 @@ $attributes = '';
 ?><html>
     <head><?php
         if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
-            echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/navigationMenu.js') . '" />';
+            echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/navigationMenu.min.js') . '" />';
         }
         ?><style><?= $style ?></style>
     </head>
