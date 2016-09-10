@@ -35,6 +35,12 @@ if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'verti
     $rootElement->setAttribute('data-nm-type', $type);
     $rootElement->setAttribute('data-nm-more', $moreItemHtml);
 }
+
+$dataResponsiveAttributes = $component->getAttribute('data-responsive-attributes');
+if (strlen($dataResponsiveAttributes) > 0) {
+    $rootElement->setAttribute('data-responsive-attributes', str_replace('=>type=', '=>data-nm-type=', $dataResponsiveAttributes));
+}
+
 if ((string) $component->class !== '') {
     $rootElement->setAttribute('class', $component->class);
 }
@@ -59,6 +65,7 @@ $attributes = '';
         if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
             echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/navigationMenu.min.js') . '" />';
         }
+        echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js') . '" />';
         ?><style><?= $style ?></style>
     </head>
     <body><?php
