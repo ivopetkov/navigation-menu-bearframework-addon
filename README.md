@@ -58,7 +58,7 @@ $app->addons->add('ivopetkov/navigation-menu-bearframework-addon');
 
 `moreItemHtml`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The HTML code for the more item. Must contain li and ul tags. Example: <li><a>...</a><ul></ul></li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The HTML code for the more item. Must contain li and ul tags. Example: `<li><a>...</a><ul></ul></li>`
 
 `class`
 
@@ -102,6 +102,7 @@ The navigation will be vertical and submenus will open to the right.
         <li><a>Button 3</a></li>
     </ul>
 </component>
+```
 
 ## License
 Navigation menu addon for Bear Framework is open-sourced software. It's free to use under the MIT license. See the [license file](https://github.com/ivopetkov/navigation-menu-bearframework-addon/blob/master/LICENSE) for more information.
