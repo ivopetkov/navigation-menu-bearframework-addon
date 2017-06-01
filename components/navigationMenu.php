@@ -68,9 +68,9 @@ $attributes = '';
 ?><html>
     <head><?php
         if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
-            echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
         }
-        echo '<script id="navigation-menu-bearframework-addon-script" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+        echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
         ?><style><?= $style ?></style>
     </head>
     <body><?php
