@@ -36,13 +36,15 @@ if ($rootElement === null) {
 }
 $elementID = 'nvgmn' . md5(uniqid());
 $rootElement->setAttribute('id', $elementID);
-if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
+$hasDropMenus = $type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right';
+if ($hasDropMenus) {
     $rootElement->setAttribute('data-nm-type', $type);
     $rootElement->setAttribute('data-nm-more', $moreItemHtml);
 }
 
 $dataResponsiveAttributes = $component->getAttribute('data-responsive-attributes');
-if (strlen($dataResponsiveAttributes) > 0) {
+$hasResponsiveAttributes = strlen($dataResponsiveAttributes) > 0;
+if ($hasResponsiveAttributes) {
     $rootElement->setAttribute('data-responsive-attributes', str_replace('=>type=', '=>data-nm-type=', $dataResponsiveAttributes));
 }
 
@@ -56,7 +58,7 @@ $content = $rootElement->outerHTML;
 
 $style = '';
 
-if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
+if ($hasDropMenus) {
     $styleTemplate = '#elementid[data-nm-type="horizontal-down"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li, #elementid[data-nm-type="horizontal-down"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="horizontal-down"] > li{display:inline-block;}#elementid[data-nm-type="horizontal-down"] li{position:relative;}#elementid[data-nm-type="horizontal-down"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li > ul{display:none;}#elementid[data-nm-type="horizontal-down"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-left"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li, #elementid[data-nm-type="vertical-left"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-left"] > li{display:block;}#elementid[data-nm-type="vertical-left"] li{position:relative;}#elementid[data-nm-type="vertical-left"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li > ul{display:none;}#elementid[data-nm-type="vertical-left"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-right"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li, #elementid[data-nm-type="vertical-right"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-right"] > li{display:block;}#elementid[data-nm-type="vertical-right"] li{position:relative;}#elementid[data-nm-type="vertical-right"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li > ul{display:none;}#elementid[data-nm-type="vertical-right"] li:hover > ul{display:inline-block;}';
     $style .= str_replace('elementid', $elementID, $styleTemplate);
 } else {
@@ -67,16 +69,21 @@ if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'verti
 $attributes = '';
 ?><html>
     <head><?php
-        if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
-            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+        if ($hasDropMenus) {
+            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" async />';
         }
-        echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+        if ($hasResponsiveAttributes) {
+            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+        }
         ?><style><?= $style ?></style>
     </head>
     <body><?php
         echo $content;
-        if ($type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right') {
-            echo '<script>ivoPetkov.navigationMenu.initialize(\'' . $elementID . '\',\'data-nm-type\',\'data-nm-more\')</script>';
+        if ($hasDropMenus) {
+            echo '<script>'
+            . 'var a=function(b,c){if(b())c();else{var a=function(){b()?(window.clearTimeout(a),c()):window.setTimeout(a,16)};window.setTimeout(a,16)}};'
+            . 'a(function(){return typeof ivoPetkov!=="undefined" && typeof ivoPetkov.navigationMenu!=="undefined"},function(){ivoPetkov.navigationMenu.initialize(\'' . $elementID . '\',\'data-nm-type\',\'data-nm-more\');});'
+            . '</script>';
         }
         ?></body>
 </html>
