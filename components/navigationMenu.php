@@ -73,7 +73,7 @@ $attributes = '';
             echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" async />';
         }
         if ($hasResponsiveAttributes) {
-            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" />';
+            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999, 'version' => 1]) . '" async />';
         }
         ?><style><?= $style ?></style>
     </head>
