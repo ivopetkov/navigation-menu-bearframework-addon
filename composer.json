@@ -13,9 +13,9 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "bearframework/bearframework": "0.10.*@beta",
-        "ivopetkov/html-server-components-bearframework-addon": "0.2.*|0.3.*|0.4.*|0.5.*@beta",
-        "ivopetkov/html5-dom-document-php": "0.3.*|0.4.*|0.5.*"
+        "bearframework/bearframework": "0.10.*",
+        "ivopetkov/html-server-components-bearframework-addon": "0.2.*|0.3.*|0.4.*|0.5.*",
+        "ivopetkov/html5-dom-document-php": "0.3.*|0.4.*|0.5.*|0.6.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8"
