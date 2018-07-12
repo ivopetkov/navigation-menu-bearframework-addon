@@ -10,7 +10,7 @@
 /**
  * @runTestsInSeparateProcesses
  */
-class NavigationMenuTest extends BearFrameworkAddonTestCase
+class NavigationMenuTest extends BearFramework\AddonTests\PHPUnitTestCase
 {
 
     /**
