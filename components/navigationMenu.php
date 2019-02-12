@@ -6,10 +6,11 @@
  * Free to use under the MIT license.
  */
 
-use \BearFramework\App;
+use BearFramework\App;
+use IvoPetkov\HTML5DOMDocument;
 
 $app = App::get();
-$context = $app->context->get(__FILE__);
+$context = $app->contexts->get(__FILE__);
 
 $type = 'horizontal-down';
 $temp = (string) $component->type;
@@ -28,8 +29,8 @@ $innerHTML = trim($component->innerHTML);
 if (!isset($innerHTML{0})) {
     $innerHTML = '<ul></ul>';
 }
-$domDocument = new IvoPetkov\HTML5DOMDocument();
-$domDocument->loadHTML($innerHTML);
+$domDocument = new HTML5DOMDocument();
+$domDocument->loadHTML($innerHTML, HTML5DOMDocument::ALLOW_DUPLICATE_IDS);
 $rootElement = $domDocument->querySelector('ul');
 if ($rootElement === null) {
     return;
@@ -70,10 +71,10 @@ $attributes = '';
 ?><html>
     <head><?php
         if ($hasDropMenus) {
-            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getUrl('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
+            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getURL('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
         }
         if ($hasResponsiveAttributes) {
-            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getUrl('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
+            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getURL('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
         }
         ?><style><?= $style ?></style>
     </head>
