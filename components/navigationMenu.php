@@ -74,7 +74,7 @@ $attributes = '';
             echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getURL('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
         }
         if ($hasResponsiveAttributes) {
-            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getURL('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
+            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getURL('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999999, 'version' => 2]) . '" async />';
         }
         ?><style><?= $style ?></style>
     </head>
