@@ -26,7 +26,7 @@ if ($temp !== '') {
 }
 
 $innerHTML = trim($component->innerHTML);
-if (!isset($innerHTML{0})) {
+if (!isset($innerHTML[0])) {
     $innerHTML = '<ul></ul>';
 }
 $domDocument = new HTML5DOMDocument();
