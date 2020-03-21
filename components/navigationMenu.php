@@ -40,7 +40,6 @@ $rootElement->setAttribute('id', $elementID);
 $hasDropMenus = $type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right';
 if ($hasDropMenus) {
     $rootElement->setAttribute('data-nm-type', $type);
-    $rootElement->setAttribute('data-nm-more', $moreItemHtml);
 }
 
 $dataResponsiveAttributes = $component->getAttribute('data-responsive-attributes');
@@ -49,18 +48,20 @@ if ($hasResponsiveAttributes) {
     $rootElement->setAttribute('data-responsive-attributes', str_replace('=>type=', '=>data-nm-type=', $dataResponsiveAttributes));
 }
 
-if ((string) $component->class !== '') {
-    $rootElement->setAttribute('class', $component->class);
+$classAttribute = (string) $component->class;
+if ($classAttribute !== '') {
+    $rootElement->setAttribute('class', $classAttribute);
 }
-if ((string) $component->style !== '') {
-    $rootElement->setAttribute('style', $component->style);
+$styleAttribute = (string) $component->style;
+if ($styleAttribute !== '') {
+    $rootElement->setAttribute('style', $styleAttribute);
 }
 $content = $rootElement->outerHTML;
 
 $style = '';
 
 if ($hasDropMenus) {
-    $styleTemplate = '#elementid[data-nm-type="horizontal-down"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li, #elementid[data-nm-type="horizontal-down"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="horizontal-down"] > li{display:inline-block;}#elementid[data-nm-type="horizontal-down"] li{position:relative;}#elementid[data-nm-type="horizontal-down"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li > ul{display:none;}#elementid[data-nm-type="horizontal-down"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-left"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li, #elementid[data-nm-type="vertical-left"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-left"] > li{display:block;}#elementid[data-nm-type="vertical-left"] li{position:relative;}#elementid[data-nm-type="vertical-left"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li > ul{display:none;}#elementid[data-nm-type="vertical-left"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-right"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li, #elementid[data-nm-type="vertical-right"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-right"] > li{display:block;}#elementid[data-nm-type="vertical-right"] li{position:relative;}#elementid[data-nm-type="vertical-right"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li > ul{display:none;}#elementid[data-nm-type="vertical-right"] li:hover > ul{display:inline-block;}';
+    $styleTemplate = '#elementid[data-nm-type="horizontal-down"]{position:relative;padding:0;margin:0;display:inline-flex;flex-direction:row;flex-wrap:nowrap;max-width:100%;overflow:hidden;}#elementid[data-nm-type="horizontal-down"] li, #elementid[data-nm-type="horizontal-down"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="horizontal-down"] > li{display:inline-block;}#elementid[data-nm-type="horizontal-down"] li{position:relative;}#elementid[data-nm-type="horizontal-down"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li > ul{display:none;}#elementid[data-nm-type="horizontal-down"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-left"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li, #elementid[data-nm-type="vertical-left"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-left"] > li{display:block;}#elementid[data-nm-type="vertical-left"] li{position:relative;}#elementid[data-nm-type="vertical-left"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li > ul{display:none;}#elementid[data-nm-type="vertical-left"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-right"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li, #elementid[data-nm-type="vertical-right"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-right"] > li{display:block;}#elementid[data-nm-type="vertical-right"] li{position:relative;}#elementid[data-nm-type="vertical-right"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li > ul{display:none;}#elementid[data-nm-type="vertical-right"] li:hover > ul{display:inline-block;}';
     $style .= str_replace('elementid', $elementID, $styleTemplate);
 } else {
     $styleTemplate = '#elementid, #elementid ul{list-style-type:none;list-style-position:outside;padding:0;margin:0;}#elementid li{list-style-type:none;list-style-position:outside;}';
@@ -68,23 +69,21 @@ if ($hasDropMenus) {
 }
 
 $attributes = '';
-?><html>
-    <head><?php
-        if ($hasDropMenus) {
-            echo '<script id="navigation-menu-bearframework-addon-script-1" src="' . $context->assets->getURL('assets/navigationMenu.min.js', ['cacheMaxAge' => 999999999, 'version' => 1]) . '" async />';
-        }
-        if ($hasResponsiveAttributes) {
-            echo '<script id="navigation-menu-bearframework-addon-script-2" src="' . $context->assets->getURL('assets/responsiveAttributes.min.js', ['cacheMaxAge' => 999999999, 'version' => 2]) . '" async />';
-        }
-        ?><style><?= $style ?></style>
-    </head>
-    <body><?php
-        echo $content;
-        if ($hasDropMenus) {
-            echo '<script>'
-            . 'var a=function(b,c){if(b())c();else{var a=function(){b()?(window.clearTimeout(a),c()):window.setTimeout(a,16)};window.setTimeout(a,16)}};'
-            . 'a(function(){return typeof ivoPetkov!=="undefined" && typeof ivoPetkov.navigationMenu!=="undefined"},function(){ivoPetkov.navigationMenu.initialize(\'' . $elementID . '\',\'data-nm-type\',\'data-nm-more\');});'
-            . '</script>';
-        }
-        ?></body>
-</html>
+echo '<html><head>';
+if ($hasDropMenus) {
+    echo '<link rel="client-packages-embed" name="-ivopetkov-navigation-menu">';
+}
+if ($hasResponsiveAttributes) {
+    echo '<link rel="client-packages-embed" name="-ivopetkov-navigation-menu-responsive-attributes">';
+}
+echo '<style>';
+echo $style;
+echo '</style></head><body>';
+echo $content;
+if ($hasDropMenus) {
+    echo '<script>clientPackages.get(\'-ivopetkov-navigation-menu\').then(function(n){n.make("' . $elementID . '","data-nm-type",' . json_encode($moreItemHtml) . ');});</script>';
+    if ($hasResponsiveAttributes) {
+        echo '<script>clientPackages.get(\'-ivopetkov-navigation-menu-responsive-attributes\').then(function(responsiveAttributes){responsiveAttributes.run();})</script>';
+    }
+}
+echo '</body></html>';

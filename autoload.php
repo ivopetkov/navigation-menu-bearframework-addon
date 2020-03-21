@@ -9,6 +9,7 @@
 
 BearFramework\Addons::register('ivopetkov/navigation-menu-bearframework-addon', __DIR__, [
     'require' => [
-        'ivopetkov/html-server-components-bearframework-addon'
+        'ivopetkov/html-server-components-bearframework-addon',
+        'ivopetkov/client-packages-bearframework-addon',
     ]
 ]);
