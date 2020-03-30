@@ -61,12 +61,34 @@ $content = $rootElement->outerHTML;
 $style = '';
 
 if ($hasDropMenus) {
-    $styleTemplate = '#elementid[data-nm-type="horizontal-down"]{position:relative;padding:0;margin:0;display:inline-flex;flex-direction:row;flex-wrap:nowrap;max-width:100%;overflow:hidden;}#elementid[data-nm-type="horizontal-down"] li, #elementid[data-nm-type="horizontal-down"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="horizontal-down"] > li{display:inline-block;}#elementid[data-nm-type="horizontal-down"] li{position:relative;}#elementid[data-nm-type="horizontal-down"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="horizontal-down"] li > ul{display:none;}#elementid[data-nm-type="horizontal-down"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-left"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li, #elementid[data-nm-type="vertical-left"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-left"] > li{display:block;}#elementid[data-nm-type="vertical-left"] li{position:relative;}#elementid[data-nm-type="vertical-left"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-left"] li > ul{display:none;}#elementid[data-nm-type="vertical-left"] li:hover > ul{display:inline-block;}#elementid[data-nm-type="vertical-right"]{position:relative;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li, #elementid[data-nm-type="vertical-right"] ul{list-style-type:none;list-style-position:outside;}#elementid[data-nm-type="vertical-right"] > li{display:block;}#elementid[data-nm-type="vertical-right"] li{position:relative;}#elementid[data-nm-type="vertical-right"] ul{position:absolute;top:0;left:0;padding:0;margin:0;}#elementid[data-nm-type="vertical-right"] li > ul{display:none;}#elementid[data-nm-type="vertical-right"] li:hover > ul{display:inline-block;}';
-    $style .= str_replace('elementid', $elementID, $styleTemplate);
+    $styleTemplate = '#id[data-nm-type="horizontal-down"]{position:relative;white-space:nowrap;max-width:100%;overflow:hidden;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] li,#id[data-nm-type="horizontal-down"] ul{list-style-type:none;list-style-position:outside;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] > li{display:inline-block;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] li{position:relative;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] ul{position:absolute;top:0;left:0;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] li > ul{display:none;}';
+    $styleTemplate .= '#id[data-nm-type="horizontal-down"] li:hover > ul{display:inline-block;}';
+
+    $styleTemplate .= '#id[data-nm-type="vertical-left"]{position:relative;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] li,#id[data-nm-type="vertical-left"] ul{list-style-type:none;list-style-position:outside;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] > li{display:block;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] li{position:relative;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] ul{position:absolute;top:0;left:0;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] li > ul{display:none;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-left"] li:hover > ul{display:inline-block;}';
+
+    $styleTemplate .= '#id[data-nm-type="vertical-right"]{position:relative;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] li,#id[data-nm-type="vertical-right"] ul{list-style-type:none;list-style-position:outside;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] > li{display:block;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] li{position:relative;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] ul{position:absolute;top:0;left:0;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] li > ul{display:none;}';
+    $styleTemplate .= '#id[data-nm-type="vertical-right"] li:hover > ul{display:inline-block;}';
 } else {
-    $styleTemplate = '#elementid, #elementid ul{list-style-type:none;list-style-position:outside;padding:0;margin:0;}#elementid li{list-style-type:none;list-style-position:outside;}';
-    $style .= str_replace('elementid', $elementID, $styleTemplate);
+    $styleTemplate = '#id,#id ul{list-style-type:none;list-style-position:outside;}';
+    $styleTemplate .= '#id li{list-style-type:none;list-style-position:outside;}';
 }
+$style .= str_replace('#id', '#' . $elementID, $styleTemplate);
 
 $attributes = '';
 echo '<html><head>';

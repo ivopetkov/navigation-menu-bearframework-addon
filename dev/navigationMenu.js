@@ -32,30 +32,41 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                 var ulChildren = UlContainer.childNodes;
                 var ulChildrenCount = ulChildren.length;
                 for (var i = 0; i < ulChildrenCount; i++) {
-                    var ulChild = ulChildren[i];
-                    if (ulChild.childNodes.length > 1) {
-                        var firstChild = ulChild.firstChild;
+                    var liElement = ulChildren[i];
+                    if (liElement.childNodes.length > 1) {
+                        var firstChild = liElement.firstChild;
                         if (firstChild.tagName.toLowerCase() === 'a') {
                             if (type === 'none') {
                                 if (typeof (firstChild.nmts) !== 'undefined') {
                                     delete firstChild.nmts;
                                 }
-                                firstChild.removeEventListener("touchstart", firstChild.nmtsh);
-                                delete firstChild.nmtsh;
+                                if (typeof (firstChild.nmtsh) !== 'undefined') {
+                                    firstChild.removeEventListener("touchstart", firstChild.nmtsh);
+                                    delete firstChild.nmtsh;
+                                }
                             } else {
-                                if (typeof (firstChild.nmts) === 'undefined') {
-                                    firstChild.nmts = 0; // pri purvi touch mahame href, a posle go vrustame
-                                    firstChild.nmtsh = function () {
-                                        if (this.nmts === 1) {
-                                            if (this.htmlnavth.length > 0) {
-                                                this.href = this.htmlnavth;
+                                if (typeof (firstChild.nmtsh) === 'undefined') {
+                                    // remove href on first touch, then bring it back
+                                    firstChild.nmtsh = function (event) {
+                                        var liElement = this.parentNode;
+                                        if (typeof (this.nmts) !== 'undefined') {
+                                            if (liElement === moreElement) {
+                                                liElement.lastChild.style.display = "none";
+                                            } else {
+                                                if (this.htmlnavth.length > 0) {
+                                                    this.href = this.htmlnavth;
+                                                }
                                             }
-                                            this.nmts = 2;
+                                            delete this.nmts;
                                         } else {
-                                            if (typeof (this.htmlnavth) === 'undefined') {
-                                                this.htmlnavth = this.href;
+                                            if (liElement === moreElement) {
+                                                liElement.lastChild.style.removeProperty('display');
+                                            } else {
+                                                if (typeof (this.htmlnavth) === 'undefined') {
+                                                    this.htmlnavth = this.href;
+                                                }
+                                                this.href = 'javascript:void(0);';
                                             }
-                                            this.href = 'javascript:void(0);';
                                             this.nmts = 1;
                                         }
                                     };
@@ -63,21 +74,25 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                                 }
                             }
                         }
-                        var ulChildUL = ulChild.lastChild;
+                        var liElementUL = liElement.lastChild;
                         if (type === 'none') {
-                            ulChildUL.style.removeProperty("left");
-                            ulChildUL.style.removeProperty("top");
+                            liElementUL.style.removeProperty("left");
+                            liElementUL.style.removeProperty("top");
                         } else {
                             var maxWidth = document.body.clientWidth;
-                            ulChildUL.style.left = "-99999px";
-                            ulChildUL.style.display = "inline-block";
-                            ulChildUL.style.maxWidth = maxWidth + 'px';
-                            var ulChildRect = ulChild.getBoundingClientRect();
-                            var ulChildULRect = ulChildUL.getBoundingClientRect();
+                            liElementUL.style.left = "-99999px";
+                            liElementUL.style.display = "inline-block";
+                            liElementUL.style.maxWidth = maxWidth + 'px';
+                            var ulChildRect = liElement.getBoundingClientRect();
+                            var ulChildULRect = liElementUL.getBoundingClientRect();
                             var left = 0;
                             var top = 0;
                             if (type === 'horizontal-down') {
-                                left = level > 0 ? ulChildRect.width : 0;
+                                if (liElement === moreElement) {
+                                    left -= ulChildULRect.width - ulChildRect.width;
+                                } else {
+                                    left = level > 0 ? ulChildRect.width : 0;
+                                }
                             } else if (type === 'vertical-right') {
                                 left = ulChildRect.width;
                             } else if (type === 'vertical-left') {
@@ -99,10 +114,10 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                                     top += ulChildRect.height * 3 / 4;
                                 }
                             }
-                            ulChildUL.style.left = Math.floor(left) + 'px';
-                            ulChildUL.style.top = Math.floor((type === 'horizontal-down' && level === 0 ? ulChildRect.height : 0) + top) + "px";
-                            updateChildren(level + 1, ulChildUL);
-                            ulChildUL.style.removeProperty("display");
+                            liElementUL.style.left = Math.floor(left) + 'px';
+                            liElementUL.style.top = Math.floor((type === 'horizontal-down' && level === 0 ? ulChildRect.height : 0) + top) + "px";
+                            updateChildren(level + 1, liElementUL);
+                            liElementUL.style.removeProperty("display");
                         }
                     }
                 }
@@ -133,10 +148,13 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                     var children = element.childNodes;
                     var firstOverflowedChild = null;
                     for (var i = 0; i < children.length; i++) {
-                        var childRect = children[i].getBoundingClientRect();
-                        if (childRect.left + childRect.width > elementRect.left + elementRect.width - moreElementRect.width) {
-                            firstOverflowedChild = children[i];
-                            break;
+                        var child = children[i];
+                        if (child !== moreElement) {
+                            var childRect = child.getBoundingClientRect();
+                            if (childRect.left + childRect.width + moreElementRect.width > elementRect.left + elementRect.width) {
+                                firstOverflowedChild = children[i];
+                                break;
+                            }
                         }
                     }
                     element.insertBefore(moreElement, firstOverflowedChild); // move the more element at the right position
