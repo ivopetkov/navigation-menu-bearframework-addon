@@ -136,35 +136,41 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
 
             var hasOverflow = false;
             if (type === 'horizontal-down') {
-                var lastChildRect = element.lastChild.getBoundingClientRect();
-                if (lastChildRect.left + lastChildRect.width > elementRect.left + elementRect.width) { // has overflow
-                    if (moreElement === null) {
-                        var temp = document.createElement("div");
-                        temp.innerHTML = moreElementHTML;
-                        moreElement = temp.firstChild; // li expected
-                        element.appendChild(moreElement);
-                    }
-                    var moreElementRect = moreElement.getBoundingClientRect();
-                    var children = element.childNodes;
-                    var firstOverflowedChild = null;
-                    for (var i = 0; i < children.length; i++) {
-                        var child = children[i];
-                        if (child !== moreElement) {
-                            var childRect = child.getBoundingClientRect();
-                            if (childRect.left + childRect.width + moreElementRect.width > elementRect.left + elementRect.width) {
-                                firstOverflowedChild = children[i];
-                                break;
+                var lastChild = element.lastChild;
+                if (moreElement !== null && lastChild === moreElement) {
+                    lastChild = lastChild.previousSibling;
+                }
+                if (lastChild !== null) {
+                    var lastChildRect = lastChild.getBoundingClientRect();
+                    if (Math.ceil(lastChildRect.left + lastChildRect.width) > Math.ceil(elementRect.left + elementRect.width)) { // has overflow
+                        if (moreElement === null) {
+                            var temp = document.createElement("div");
+                            temp.innerHTML = moreElementHTML;
+                            moreElement = temp.firstChild; // li expected
+                            element.appendChild(moreElement);
+                        }
+                        var moreElementRect = moreElement.getBoundingClientRect();
+                        var children = element.childNodes;
+                        var firstOverflowedChild = null;
+                        for (var i = 0; i < children.length; i++) {
+                            var child = children[i];
+                            if (child !== moreElement) {
+                                var childRect = child.getBoundingClientRect();
+                                if (Math.ceil(childRect.left + childRect.width + moreElementRect.width) > Math.ceil(elementRect.left + elementRect.width)) {
+                                    firstOverflowedChild = children[i];
+                                    break;
+                                }
                             }
                         }
-                    }
-                    element.insertBefore(moreElement, firstOverflowedChild); // move the more element at the right position
-                    for (var i = 0; i < 99999; i++) {
-                        if (!moreElement.nextSibling) {
-                            break;
+                        element.insertBefore(moreElement, firstOverflowedChild); // move the more element at the right position
+                        for (var i = 0; i < 99999; i++) {
+                            if (!moreElement.nextSibling) {
+                                break;
+                            }
+                            moreElement.lastChild.appendChild(moreElement.nextSibling);
                         }
-                        moreElement.lastChild.appendChild(moreElement.nextSibling);
+                        hasOverflow = true;
                     }
-                    hasOverflow = true;
                 }
             }
 
