@@ -133,6 +133,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                     moreElement.parentNode.appendChild(moreChildrenContainer.firstChild);
                 }
             }
+            // todo move alwaysVisibleElements back before update
 
             var hasOverflow = false;
             if (type === 'horizontal-down') {
@@ -149,14 +150,24 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                             moreElement = temp.firstChild; // li expected
                             element.appendChild(moreElement);
                         }
-                        var moreElementRect = moreElement.getBoundingClientRect();
                         var children = element.childNodes;
+                        var alwaysVisibleElements = [];
+                        var alwaysVisibleElementsWidth = 0;
+                        for (var i = 0; i < children.length; i++) {
+                            var child = children[i];
+                            if (child !== moreElement && child.getAttribute('data-navigation-visible') === 'always') {
+                                var childRect = child.getBoundingClientRect();
+                                alwaysVisibleElements.push(child);
+                                alwaysVisibleElementsWidth += childRect.width;
+                            }
+                        }
+                        var moreElementRect = moreElement.getBoundingClientRect();
                         var firstOverflowedChild = null;
                         for (var i = 0; i < children.length; i++) {
                             var child = children[i];
-                            if (child !== moreElement) {
+                            if (child !== moreElement && child.getAttribute('data-navigation-visible') !== 'always') {
                                 var childRect = child.getBoundingClientRect();
-                                if (Math.ceil(childRect.left + childRect.width + moreElementRect.width) > Math.ceil(elementRect.left + elementRect.width)) {
+                                if (Math.ceil(childRect.left + childRect.width + moreElementRect.width) > Math.ceil(elementRect.left + elementRect.width - alwaysVisibleElementsWidth)) {
                                     firstOverflowedChild = children[i];
                                     break;
                                 }
@@ -167,7 +178,12 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                             if (!moreElement.nextSibling) {
                                 break;
                             }
-                            moreElement.lastChild.appendChild(moreElement.nextSibling);
+                            if (alwaysVisibleElements.indexOf(moreElement.nextSibling) !== -1) {
+                                var alwaysVisibleElement = moreElement.nextSibling;
+                                element.insertBefore(alwaysVisibleElement, moreElement);
+                            } else {
+                                moreElement.lastChild.appendChild(moreElement.nextSibling);
+                            }
                         }
                         hasOverflow = true;
                     }
