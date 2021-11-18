@@ -70,7 +70,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                                             this.nmts = 1;
                                         }
                                     };
-                                    firstChild.addEventListener("touchstart", firstChild.nmtsh, false);
+                                    firstChild.addEventListener("touchstart", firstChild.nmtsh, { passive: true });
                                 }
                             }
                         }
