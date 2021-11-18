@@ -19,7 +19,8 @@
         "bearframework/bearframework": "1.*",
         "ivopetkov/html-server-components-bearframework-addon": "1.*",
         "ivopetkov/html5-dom-document-php": "2.*",
-        "ivopetkov/client-packages-bearframework-addon": "1.*"
+        "ivopetkov/client-packages-bearframework-addon": "1.*",
+        "ivopetkov/responsive-attributes-bearframework-addon": "1.*"
     },
     "require-dev": {
         "bearframework/addon-tests": "1.*"

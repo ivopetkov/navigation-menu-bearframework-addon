@@ -11,5 +11,6 @@ BearFramework\Addons::register('ivopetkov/navigation-menu-bearframework-addon', 
     'require' => [
         'ivopetkov/html-server-components-bearframework-addon',
         'ivopetkov/client-packages-bearframework-addon',
+        'ivopetkov/responsive-attributes-bearframework-addon'
     ]
 ]);

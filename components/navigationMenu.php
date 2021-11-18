@@ -96,7 +96,7 @@ if ($hasDropMenus) {
     echo '<link rel="client-packages-embed" name="-ivopetkov-navigation-menu">';
 }
 if ($hasResponsiveAttributes) {
-    echo '<link rel="client-packages-embed" name="-ivopetkov-navigation-menu-responsive-attributes">';
+    echo '<link rel="client-packages-embed" name="responsiveAttributes">';
 }
 echo '<style>';
 echo $style;
@@ -105,7 +105,7 @@ echo $content;
 if ($hasDropMenus) {
     echo '<script>clientPackages.get(\'-ivopetkov-navigation-menu\').then(function(n){n.make("' . $elementID . '","data-nm-type",' . json_encode($moreItemHtml) . ');});</script>';
     if ($hasResponsiveAttributes) {
-        echo '<script>clientPackages.get(\'-ivopetkov-navigation-menu-responsive-attributes\').then(function(responsiveAttributes){responsiveAttributes.run();})</script>';
+        echo '<script>clientPackages.get(\'responsiveAttributes\').then(function(r){r.run();})</script>';
     }
 }
 echo '</body></html>';
