@@ -33,7 +33,6 @@ class NavigationMenuTest extends BearFramework\AddonTests\PHPUnitTestCase
             . '<li><a>Button 3</a></li>'
             . '</ul>'
             . '</component>');
-        //$this->assertTrue(strpos($result, '/navigationMenu.min.js') !== false);
         $this->assertTrue(strpos($result, '<li><a>Button 2.2</a></li>') !== false);
     }
 }
