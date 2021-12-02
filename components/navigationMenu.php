@@ -42,7 +42,7 @@ if ($hasDropMenus) {
     $rootElement->setAttribute('data-nm-type', $type);
 }
 
-$dataResponsiveAttributes = $component->getAttribute('data-responsive-attributes');
+$dataResponsiveAttributes = (string)$component->getAttribute('data-responsive-attributes');
 $hasResponsiveAttributes = strlen($dataResponsiveAttributes) > 0;
 if ($hasResponsiveAttributes) {
     $rootElement->setAttribute('data-responsive-attributes', str_replace('=>type=', '=>data-nm-type=', $dataResponsiveAttributes));
