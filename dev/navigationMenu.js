@@ -19,7 +19,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                 type = 'none';
             }
 
-            var updateKey = JSON.stringify([type, elementRect.top, elementRect.left, elementRect.width, elementRect.height]);
+            var updateKey = JSON.stringify([type, Math.floor(elementRect.top), Math.floor(elementRect.left), Math.floor(elementRect.width), Math.floor(elementRect.height)]);
             if (lastUpdatedKey === updateKey) {
                 return;
             }
@@ -89,33 +89,33 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                             var top = 0;
                             if (type === 'horizontal-down') {
                                 if (liElement === moreElement) {
-                                    left -= ulChildULRect.width - ulChildRect.width;
+                                    left -= Math.floor(ulChildULRect.width - ulChildRect.width);
                                 } else {
-                                    left = level > 0 ? ulChildRect.width : 0;
+                                    left = level > 0 ? Math.floor(ulChildRect.width) : 0;
                                 }
                             } else if (type === 'vertical-right') {
-                                left = ulChildRect.width;
+                                left = Math.floor(ulChildRect.width);
                             } else if (type === 'vertical-left') {
-                                left = -ulChildULRect.width;
+                                left = -Math.floor(ulChildULRect.width);
                             }
                             var updateTop = false;
-                            var overflowRight = (ulChildULRect.left + ulChildULRect.width + 99999) - maxWidth + left;
+                            var overflowRight = (Math.floor(ulChildULRect.left) + Math.floor(ulChildULRect.width) + 99999) - maxWidth + left;
                             if (overflowRight > 0) {
                                 left -= overflowRight;
                                 updateTop = true;
                             }
-                            var overflowLeft = -((ulChildULRect.left + 99999) + left);
+                            var overflowLeft = -((Math.floor(ulChildULRect.left) + 99999) + left);
                             if (overflowLeft > 0) {
                                 left += overflowLeft;
                                 updateTop = true;
                             }
                             if (updateTop) {
                                 if ((type === 'horizontal-down' && level > 0) || type === 'vertical-right' || type === 'vertical-left') { // Move the overflown lists down so the parent can be accessed. It's an edge case.
-                                    top += ulChildRect.height * 3 / 4;
+                                    top += Math.floor(ulChildRect.height * 3 / 4);
                                 }
                             }
                             liElementUL.style.left = Math.floor(left) + 'px';
-                            liElementUL.style.top = Math.floor((type === 'horizontal-down' && level === 0 ? ulChildRect.height : 0) + top) + "px";
+                            liElementUL.style.top = Math.floor((type === 'horizontal-down' && level === 0 ? Math.floor(ulChildRect.height) : 0) + top) + "px";
                             updateChildren(level + 1, liElementUL);
                             liElementUL.style.removeProperty("display");
                         }
@@ -158,7 +158,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                             if (child !== moreElement && child.getAttribute('data-navigation-visible') === 'always') {
                                 var childRect = child.getBoundingClientRect();
                                 alwaysVisibleElements.push(child);
-                                alwaysVisibleElementsWidth += childRect.width;
+                                alwaysVisibleElementsWidth += Math.floor(childRect.width);
                             }
                         }
                         var moreElementRect = moreElement.getBoundingClientRect();
