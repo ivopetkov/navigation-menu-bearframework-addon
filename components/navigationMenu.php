@@ -12,10 +12,10 @@ use IvoPetkov\HTML5DOMDocument;
 $app = App::get();
 $context = $app->contexts->get(__DIR__);
 
-$type = 'horizontal-down';
+$type = 'responsive'; // Will load types and wait for HTML attribute update
 $temp = (string) $component->type;
 if ($temp !== '') {
-    if (array_search($temp, ['horizontal-down', 'vertical-left', 'vertical-right', 'list-vertical', 'list-horizontal']) !== false) {
+    if (array_search($temp, ['horizontal-down', 'vertical-left', 'vertical-right', 'list-vertical', 'list-horizontal', 'responsive']) !== false) {
         $type = $temp;
     }
 }
@@ -37,7 +37,8 @@ if ($rootElement === null) {
 }
 $elementID = 'nvgmn' . md5(uniqid());
 $rootElement->setAttribute('id', $elementID);
-$hasDropMenus = $type === 'horizontal-down' || $type === 'vertical-left' || $type === 'vertical-right';
+
+$hasDropMenus = array_search($type, ['horizontal-down', 'vertical-left', 'vertical-right', 'responsive']) !== false;
 if ($hasDropMenus) {
     $rootElement->setAttribute('data-nm-type', $type);
 }

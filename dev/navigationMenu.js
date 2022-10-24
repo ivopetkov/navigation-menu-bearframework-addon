@@ -36,7 +36,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                     if (liElement.childNodes.length > 1) {
                         var firstChild = liElement.firstChild;
                         if (firstChild.tagName.toLowerCase() === 'a') {
-                            if (type === 'none') {
+                            if (type === 'none' || type === 'responsive') {
                                 if (typeof (firstChild.nmts) !== 'undefined') {
                                     delete firstChild.nmts;
                                 }
@@ -75,7 +75,7 @@ ivoPetkov.bearFrameworkAddons.navigationMenu = ivoPetkov.bearFrameworkAddons.nav
                             }
                         }
                         var liElementUL = liElement.lastChild;
-                        if (type === 'none') {
+                        if (type === 'none' || type === 'responsive') {
                             liElementUL.style.removeProperty("left");
                             liElementUL.style.removeProperty("top");
                         } else {
