@@ -14,7 +14,7 @@ $context = $app->contexts->get(__DIR__);
 
 
 $app->clientPackages
-    ->add('-ivopetkov-navigation-menu', function (IvoPetkov\BearFrameworkAddons\ClientPackage $package) use ($context) {
+    ->add('-ivopetkov-navigation-menu', function (IvoPetkov\BearFrameworkAddons\ClientPackage $package) use ($context): void {
         //$package->addJSCode(file_get_contents($context->dir . '/dev/navigationMenu.js'));
         $package->addJSCode(include $context->dir . '/assets/navigationMenu.min.js.php');
         $package->get = 'return ivoPetkov.bearFrameworkAddons.navigationMenu;';
